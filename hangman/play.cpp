@@ -5,7 +5,8 @@
 #include<cstdlib>
 using namespace std;
 
-string spawnWords(string summonWord[]){
+//lay mot tu ngau nhien trong kho tu
+string spawnWords(const vector <string>& summonWord){
     int gacha = rand() % 1;
     string hidden = summonWord[gacha];
     return hidden;
@@ -15,6 +16,7 @@ string spawnWords(string summonWord[]){
     maskedWord = "-";
 }*/
 
+//
 void normalizeLetter(char& guess){
     if ( guess < 'A' || guess >'z' || (guess > 'Z' && guess < 'a') ){
         cout << "Oops, this sign is fatal.";
@@ -33,16 +35,17 @@ bool isGuessFit (char guess, const string& hidden){
     return 0;
 }
 
-string createMaskedWord(const string& hidden){
-    string maskedWord;
-    for (int i = 0; i < hidden.size(); i++){
+// tao mat na cho tu bi mat
+void createMaskedWord(const string& hidden, int& unmasked, string& maskedWord){
+    unmasked = hidden.size();
+    for (int i = 0; i < unmasked; i++){
         maskedWord += "-";
     }
-    return maskedWord;
 }
 
-void updateWord (char guess, const string& hidden, string& maskedWord, int& tries){
-    if (isGuessFit(guess, hidden)){
+// cap nhat mat na sau khi doan dua tren
+void updateWord (const char& guess, const string& hidden, string& maskedWord, int& unmasked){
+    /**if (isGuessFit(guess, hidden)){
         for (int i = 0; i < hidden.size(); i++){
             if (guess == hidden[i]){
                 maskedWord[i] = guess;
@@ -53,5 +56,40 @@ void updateWord (char guess, const string& hidden, string& maskedWord, int& trie
         cout << "Wrong" << endl;
         tries--;
     }
-    cout << maskedWord << endl;
+    cout << maskedWord << endl;**/
+    for (int i = 0; i < hidden.size(); i++){
+        if (guess == hidden[i]){
+            maskedWord[i] = guess;
+            unmasked--;
+        }
+    }
+}
+
+// dieu kien dung tro choi
+bool isTimeUp (int& tries, int unmasked){
+    if (tries == 0 || unmasked == 0){
+        return true;
+    }
+    return false;
+}
+
+// hien nhung tu da doan truoc do
+void updateGuessedLetters (const char& guess, string& guessed){
+    guessed += guess;
+}
+
+// render
+
+void showUpdated (const string& maskedWord, const string& guessed){
+    cout << maskedWord << "     Previous guesses : " << guessed;
+
+}
+
+void showResult (const int& unmasked){
+    if (unmasked == 0){
+        cout << "Win";
+    }
+    else {
+        cout << "Lose";
+    }
 }

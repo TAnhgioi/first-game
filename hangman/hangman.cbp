@@ -37,8 +37,6 @@
 		<Unit filename="main.cpp" />
 		<Unit filename="play.cpp" />
 		<Unit filename="play.h" />
-		<Unit filename="render.cpp" />
-		<Unit filename="render.h" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
 		</Extensions>
